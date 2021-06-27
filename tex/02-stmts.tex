@@ -1,0 +1,183 @@
+\section{Statements}
+
+\begin{frame}
+  \frametitle{Statements}
+
+  \Emph{Statements} create a kind of \emph{verilog} statement, such as:
+    \begin{itemize}
+      \item {Wire Declaration}
+      \item {Register Declaration}
+      \item {Connection}
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Wire Declaration}
+  Wires as hardware nodes to which one can assign values or connect other nodes.	
+
+  \begin{block}{Wire()}
+    \begin{columns}[T]
+      \begin{column}{0.5\textwidth}
+        \lstinputlisting [language = scala]{./code/wire.scala }
+      \end{column}
+      \begin{column}{0.5\textwidth}
+        \lstinputlisting [language = verilog]{./code/wire.v }
+      \end{column}
+    \end{columns}
+  \end{block}
+
+  \begin{block}{WireInit()}
+    \begin{columns}[T]
+      \begin{column}{0.5\textwidth}
+        \lstinputlisting [language = scala]{./code/wireinit.scala }
+      \end{column}
+      \begin{column}{0.5\textwidth}
+        \lstinputlisting [language = verilog]{./code/wireinit.v }
+      \end{column}
+    \end{columns}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Register Declaration}
+
+  \begin{columns}[T]
+    \begin{column}{0.5\textwidth}
+      \Emph{Reg()}: without Reset
+      \lstinputlisting [language = scala]{./code/reg.scala }
+      \lstinputlisting [language = verilog]{./code/reg.v }
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \Emph{RegInit()}: with \emph{Sync} Reset
+      \lstinputlisting [language = scala]{./code/RegInitSync.scala }
+      \lstinputlisting [language = verilog]{./code/RegInitSync.v }
+    \end{column}
+  \end{columns}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Register Declaration}
+
+  \Emph{RegInit()}: with \emph{AsyncNeg} Reset
+  \lstinputlisting [language = scala]{./code/RegInitAsyncNeg.scala }
+  \lstinputlisting [language = verilog]{./code/RegInitAsyncNeg.v }
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Register Declaration}
+
+  \Emph{RegInit()}: with \emph{AsyncPos} Reset
+  \lstinputlisting [language = scala]{./code/RegInitAsyncPos.scala }
+  \lstinputlisting [language = verilog]{./code/RegInitAsyncPos.v }
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Connection}
+
+  \begin{enumerate}
+    \item Context is same module of both sink and source
+    \item Context is same module as sink and source is child module
+    \item Context is same module as source and sink is child module
+    \item Context is the parent module of both sink and source
+  \end{enumerate}
+
+  \begin{table}[h!]
+  \footnotesize
+  \centering
+  \begin{tabular}{||c c c||}
+    \hline
+      Case & Sink & Source \\
+    \hline\hline
+      1 & Current MOD & Current MOD \\
+      2 & Current MOD & Child   MOD \\
+      3 & Child   MOD & Current MOD \\
+      4 & Child   MOD & Child   MOD \\
+    \hline
+  \end{tabular}
+  \caption{Four cases when connect source to sink.}
+  \label{table:1}
+  \end{table}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Connection: Case 1 \& 2}
+
+  \Emph{case 1:} Context is same module of both sink and source
+
+  \begin{table}[h!]
+  \footnotesize
+  \centering
+  \begin{tabular}{||c c c||}
+    \hline
+      Case & Sink & Source \\
+    \hline\hline
+     \checkmark & Output   & \_\_\_ \\
+     \checkmark & Internal & \_\_\_ \\
+     \xmark     & Input    & \_\_\_ \\
+    \hline
+  \end{tabular}
+  \end{table}
+
+ \Emph{case 2:} Context is same module as sink and source is child module
+
+  \begin{table}[h!]
+  \footnotesize
+  \centering
+  \begin{tabular}{||c c c||}
+    \hline
+      Case & Sink & Source \\
+    \hline\hline
+     \checkmark & Internal & Output  \\
+     \checkmark & Internal & Input   \\
+     \checkmark & Output   & Output  \\
+     \checkmark & Output   & Input   \\
+     \xmark     & Input    & \_\_\_  \\
+    \hline
+  \end{tabular}
+  \end{table}
+
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Connection: Case 3 \& 4}
+
+  \Emph{case 3:} Context is same module as source and sink is child module
+
+  \begin{table}[h!]
+  \footnotesize
+  \centering
+  \begin{tabular}{||c c c||}
+    \hline
+      Case & Sink & Source \\
+    \hline\hline
+     \checkmark & Input    & \_\_\_ \\
+     \xmark     & Output   & \_\_\_ \\
+     \xmark     & Internal & \_\_\_ \\
+    \hline
+  \end{tabular}
+  \end{table}
+
+ \Emph{case 4:} Context is the parent module of both sink and source
+
+  \begin{table}[h!]
+  \footnotesize
+  \centering
+  \begin{tabular}{||c c c||}
+    \hline
+      Case & Sink & Source \\
+    \hline\hline
+     \checkmark & Input    & Input  \\
+     \checkmark & Input    & Output \\
+     \xmark     & Output   & \_\_\_ \\
+     \xmark     & Internal & \_\_\_ \\
+    \hline
+  \end{tabular}
+  \end{table}
+
+\end{frame}

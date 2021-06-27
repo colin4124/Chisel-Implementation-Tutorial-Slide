@@ -1,0 +1,52 @@
+\documentclass[xetex, unicode, 10pt]{beamer}
+\usepackage{sty/style} 
+\usepackage{lipsum}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+\newcommand\blfootnote[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
+
+
+\title{
+  Chisel Implementation Tutorial
+}
+\subtitle{In a lightweight and simple way}
+\author{Rongwei\ Lin}
+\institute{
+  JLSemi Inc.
+}
+\date{\today}
+\titlegraphic{\includegraphics[width = 2cm]{fig/logo}} 
+
+\begin{document}
+
+\maketitle
+
+\include{tex/01-datatype}
+\include{tex/02-stmts}
+\include{tex/03-module}
+\include{tex/04-ir}
+\include{tex/05-verilog}
+
+\begin{frame}[allowframebreaks, noframenumbering]{Thank You}
+  \printbibheading[heading = none]
+  \printbibliography
+  \begin{block}{Talk is cheap. Show me the code.}
+    \begin{itemize}
+     \thusitem https://github.com/colin4124/Chisel-Implementation-Tutorial
+    \end{itemize}
+  \end{block}
+  \blfootnote{
+  Thanks for sano-jin: https://github.com/sano-jin/express-beamer
+  }
+
+\end{frame}
+
+\end{document}

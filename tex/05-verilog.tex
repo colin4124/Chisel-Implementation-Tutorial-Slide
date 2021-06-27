@@ -1,0 +1,118 @@
+\section{Generate Verilog}
+
+\begin{frame}
+  \frametitle{Example}
+
+  \lstinputlisting [language = scala]{./code/Simple.scala }
+\end{frame}
+
+\begin{frame}
+  \frametitle{Collect Ports}
+    
+  e.g: \hbox{\fbox{\lstinline[language=scala]|val clk = IO(Input(Clock()))|}}
+
+  \begin{enumerate}
+    \item Clock() \rightarrow \EMPH{Bits}
+      \begin{itemize}
+        \item \Emph{Synthesizable:} Chisel Type
+        \item \Emph{Type:} ClockType
+        \item \Emph{Direction}: Internal
+      \end{itemize}
+    \item Input() \rightarrow \EMPH{Bits}
+      \begin{itemize}
+        \item \Emph{Synthesizable:} Chisel Type
+        \item \Emph{Type:} ClockType
+        \item \Emph{Direction}: Input
+      \end{itemize}
+    \item IO() \rightarrow \EMPH{Bits} \rightarrow \EMPH{Ports List}
+      \begin{itemize}
+        \item \Emph{Synthesizable:} Port Binding
+        \item \Emph{Type:} ClockType
+        \item \Emph{Direction}: Input
+        \item \Emph{ref}: None
+      \end{itemize}
+
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Collect Statements}
+
+  e.g: \hbox{\fbox{\lstinline[language=scala]|val bowl = withClockAndReset(clk,rst) { RegInit(5.U ) }|}}
+
+  \begin{enumerate}
+    \item withClockAndReset(..)
+      \begin{itemize}
+        \item \Emph{Clock:} clk
+        \item \Emph{Reset:} rst
+      \end{itemize}
+    \item 5.U \rightarrow \EMPH{Bits}
+      \begin{itemize}
+        \item \Emph{Synthesizable:} Chisel Type
+        \item \Emph{Type:} UIntType
+        \item \Emph{Direction}: Internal
+        \item \Emph{ref}: UIntLiteral
+      \end{itemize}
+    \item RegInit() \rightarrow \EMPH{DefRegister} \rightarrow \EMPH{Statements List}
+      \begin{itemize}
+        \item \Emph{Synthesizable:} RegBinding
+        \item \Emph{Type:} UIntType
+        \item \Emph{Direction}: Internal
+        \item \Emph{ref}: UIntLiteral
+      \end{itemize}
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Generate Component}
+
+  \Emph{1.Get Bits name}
+  \begin{enumerate}
+    \item Get Public Fields of \hbox{\fbox{\lstinline[language=scala]|Class|}}
+    \item Filter \hbox{\fbox{\lstinline[language=scala]|HasId|}}, store delcared name.
+  \end{enumerate}
+
+  \Emph{2. Naming Ports}
+  \begin{enumerate}
+  \item Set each port of  \rightarrow  \EMPH{Ports List}
+    \begin{itemize}
+      \item \Emph{ref}: Reference(name)
+    \end{itemize}
+  \end{enumerate}
+
+  \Emph{4. Naming Synthesizable Bits}
+  \begin{enumerate}
+    \item Name \Emph{Bits} if it does not \hbox{\fbox{\lstinline[language=scala]|suggestName|}}
+    \item Set \hbox{\fbox{\lstinline[language=scala]|Reference(name, type)|}} IR to \Emph{Bits}
+  \end{enumerate}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Generate Component}
+
+  \Emph{5. Generate Circuit IR}
+  \begin{itemize}
+    \item \Emph{name:} class name as default
+    \item \Emph{ports:} Port(clk, Input), 
+      \begin{itemize}
+        \item Port(clk, Input), 
+        \item ...
+      \end{itemize}
+    \item \Emph{Statements}:
+      \begin{itemize}
+        \item DefRegister(Node(bowl), clk, rst, 5.U), 
+	\item DefWire(Node(fruit))
+	\item Connect(Node(fruit), Node(Bits(DoPrim(Or, [(sel \& apple), (~sel \& cherry)]))))
+	\item Connect(Node(bowl), Node(Bits(DoPrim(Add, [bowl, fruit]))))
+	\item Connect(Node(juice), Node(bowl))
+      \end{itemize}
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Generate Verilog}
+
+  \lstinputlisting [language = verilog]{./code/Simple.v }
+\end{frame}

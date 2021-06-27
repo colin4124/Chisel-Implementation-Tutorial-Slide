@@ -1,0 +1,222 @@
+\section{IR}
+
+\begin{frame}
+  \frametitle{Circuit \& Component \& DefModule}
+
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{block}{Circuit}
+        \begin{itemize}
+	  \item name    \(\rightarrow\) \Emph{String}
+	  \item modules \(\rightarrow\) \Emph{Component}
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \includegraphics[width=3cm]{./fig/ir/circuit.png}
+    \end{column}
+  \end{columns}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{block}{Component}
+        \begin{itemize}
+          \item name  \(\rightarrow\)  \Emph{String}
+          \item ports \(\rightarrow\) \Emph{Port}
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \includegraphics[width=3cm]{./fig/ir/component.png}
+    \end{column}
+  \end{columns}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{block}{DefModule}
+        \begin{itemize}
+          \item name  \(\rightarrow\) \Emph{String}
+          \item ports \(\rightarrow\) \Emph{Port}
+	  \item stmts \(\rightarrow\) \Emph{Statement}
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \includegraphics[width=3cm]{./fig/ir/defmodule.png}
+    \end{column}
+  \end{columns}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Port \& Direction}
+
+  \begin{block}{Port}
+    \begin{itemize}
+      \item data      \(\rightarrow\) \Emph{Bits}
+      \item direction \(\rightarrow\) \Emph{Direction}
+    \end{itemize}
+  \end{block}
+
+  \begin{block}{Direction}
+    \begin{itemize}
+      \item {Input}
+      \item {Output}
+      \item {InOut}
+    \end{itemize}
+
+  \end{block}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Statement}
+
+  \begin{block}{Statement}
+    \begin{columns}
+      \begin{column}{0.5\textwidth}
+        \begin{itemize}
+          \item {DefWire}
+            \begin{itemize}
+              \item e \(\rightarrow\) \Emph{Expression}
+            \end{itemize}
+          \item{Connnect}
+            \begin{itemize}
+              \item loc \(\rightarrow\) \Emph{Expression}
+              \item expr \(\rightarrow\) \Emph{Expression}
+            \end{itemize}
+          \item{DefRegister}
+            \begin{itemize}
+              \item clock \(\rightarrow\) \Emph{Expression}
+              \item reset \(\rightarrow\) \Emph{Expression}
+              \item init  \(\rightarrow\) \Emph{Expression}
+            \end{itemize}
+        \end{itemize}
+      \end{column}
+      \begin{column}{0.5\textwidth}
+      \end{column}
+    \end{columns}
+
+  \end{block}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Expression}
+
+  \begin{block}{Expression}
+    \begin{itemize}
+      \item Reference
+      \item Node
+      \item DoPrim
+      \item ILit
+      \item Literal
+        \begin{itemize}
+          \item UIntLiteral
+          \item SIntLiteral
+        \end{itemize}
+    \end{itemize}
+  \end{block}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Expression}
+
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{itemize}
+        \item Reference
+          \begin{itemize}
+            \item serialize \(\rightarrow\) \Emph{String}
+            \item tpe       \(\rightarrow\) \Emph{Type}
+          \end{itemize}
+
+        \item Node
+          \begin{itemize}
+            \item id \(\rightarrow\) \Emph{Data}
+          \end{itemize}
+
+        \item DoPrim
+          \begin{itemize}
+            \item op     \(\rightarrow\) \Emph{PrimOp}
+            \item args   \(\rightarrow\) \Emph{Seq[Expression]}
+            \item consts \(\rightarrow\) \Emph{Seq[BigInt]}
+          \end{itemize}
+      \end{itemize}
+
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{itemize}
+        \item ILit
+          \begin{itemize}
+            \item id \(\rightarrow\) \Emph{Data}
+          \end{itemize}
+
+        \item Literal
+          \begin{itemize}
+            \item {UIntLiteral}
+              \begin{itemize}
+                \item valude \(\rightarrow\) \Emph{BigInt}
+                \item width  \(\rightarrow\) \Emph{Width}
+              \end{itemize}
+            \item{SIntLiteral}
+              \begin{itemize}
+                \item valude \(\rightarrow\) \Emph{BigInt}
+                \item width  \(\rightarrow\) \Emph{Width}
+              \end{itemize}
+          \end{itemize}
+      \end{itemize}
+    \end{column}
+  \end{columns}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Type}
+
+  \begin{columns}[t]
+    \begin{column}{0.5\textwidth}
+      \begin{block}{Type}
+        \begin{itemize}
+          \item UIntType
+            \begin{itemize}
+              \item width \(\rightarrow\) \Emph{IntWidth}
+            \end{itemize}
+          \item SIntType
+            \begin{itemize}
+              \item width \(\rightarrow\) \Emph{IntWidth}
+            \end{itemize}
+          \item ClockType
+            \begin{itemize}
+              \item width \(\rightarrow\) \Emph{IntWidth(1)}
+            \end{itemize}
+          \item ResetType
+            \begin{itemize}
+              \item width \(\rightarrow\) \Emph{IntWidth(1)}
+            \end{itemize}
+            \begin{itemize}
+              \item SyncResetType
+              \item AsyncNegResetType
+              \item AsyncPosResetType
+            \end{itemize}
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{block}{Width}
+        \begin{itemize}
+          \item IntWidth
+            \begin{itemize}
+              \item value \(\rightarrow\) \Emph{BigInt}
+            \end{itemize}
+          \item UnknownWidth
+            \begin{itemize}
+              \item valude \(\rightarrow\) \Emph{BigInt}
+            \end{itemize}
+        \end{itemize}
+      \end{block}
+    \end{column}
+
+  \end{columns}
+\end{frame}
+
+

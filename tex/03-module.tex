@@ -1,0 +1,24 @@
+\section{Module}
+
+\begin{frame}
+  \frametitle{Module}
+
+  \Emph{Collect Ports} \\
+  Through \raise1pt\hbox{\fbox{\lstinline[language=scala]|IO(...)|}} method. E.g: \raise1pt\hbox{\fbox{\lstinline[language=scala]|IO(Input(Bool())|}}
+
+  \Emph{Collect Statements} \\
+  Through statements API, such as  \raise1pt\hbox{\fbox{\lstinline[language=scala]|WireInit(10.U)|}}
+
+  \Emph{Generate Component}
+  \begin{enumerate}
+    \item Get Name of \Emph{Bits} by \hbox{\fbox{\lstinline[language=scala]|[java.lang.reflect.Method]|}}
+    \item Naming \Emph{Ports}
+    \item Naming \EMPH{Synthesizable} \Emph{Bits}
+    \item Generate \Emph{Circuit IR}
+      \begin{itemize}
+        \item Name
+        \item Ports IR
+        \item Statements IR
+      \end{itemize}
+  \end{enumerate}
+\end{frame}
